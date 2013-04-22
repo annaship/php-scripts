@@ -78,14 +78,14 @@ if (!mysql_select_db($database))
    ';
    
    $my_query2 = '
-     SELECT DISTINCTROW refhvr_ids,
+     SELECT DISTINCTROW project_dataset, refhvr_ids,
       Distance,
       Sequence,
       Rank,
      taxonomy AS Taxonomy
      FROM vamps_sequences WHERE (project_dataset in ("TNO_TNP_Bv6--61201015280", "TNO_TNP_Bv6--61207015299", "TNO_TNP_Bv6--61212015153", "TNO_TNP_Bv6--61212015298", "TNO_TNP_Bv6--61212015301", "TNO_TNP_Bv6--61214015171", "TNO_TNP_Bv6--70103015344")
      ) AND taxonomy LIKE "Bacteria%" 
-     UNION SELECT DISTINCTROW refhvr_ids,
+     UNION SELECT DISTINCTROW project_dataset, refhvr_ids,
       Distance,
       Sequence,
       Rank,
@@ -106,12 +106,12 @@ if (!mysql_select_db($database))
    while ($row = mysql_fetch_array($sequence_id_res)) {
      // print_r($row);
      // echo "<br/>";
-     $my_array['refhvr_ids'] = $row['refhvr_ids'];
-     $my_array['project']    = $row['project'];
-     $my_array['dataset']    = $row['dataset'];
-     $my_array['seq_count']  = $row['seq_count'];
-     $my_array['Rank']       = $row['Rank'];
-     $my_array['taxonomy']   = $row['taxonomy'];   
+     // $my_array['refhvr_ids'] = $row['refhvr_ids'];
+     // $my_array['project']    = $row['project'];
+     // $my_array['dataset']    = $row['dataset'];
+     // $my_array['seq_count']  = $row['seq_count'];
+     // $my_array['Rank']       = $row['Rank'];
+     // $my_array['taxonomy']   = $row['taxonomy'];   
      // $sequence_id = $row['sequence_id'];
      // echo "sequence_id = $sequence_id\n";
      // var_dump($row);
@@ -136,8 +136,50 @@ if (!mysql_select_db($database))
    
    $my_arr = rewrite_taxonomy($my_res);
    
+   foreach ($my_res as $row)
+   {
+     // sum(CASE WHEN project_dataset="TNO_TNP_Bv6--70501015260" THEN seq_count ELSE 0 END) AS "TNO_TNP_Bv6_70501015260"
+     print $row['project_dataset'];
+     print "<br/>";
+     
+   }
+   /*
+   Array ( 
+   [0] => d6_DP470 
+   [refhvr_ids] => d6_DP470 
+   [1] => 0 
+   [TNO_TNP_Bv6_70501015260] => 0 
+   [2] => 0 
+   [TNO_TNP_Bv6_61201015280] => 0 
+   [3] => 0 
+   [TNO_TNP_Bv6_61207015299] => 0 
+   [4] => 0 
+   [TNO_TNP_Bv6_61212015153] => 0 
+   [5] => 0 
+   [TNO_TNP_Bv6_61212015298] => 0 
+   [6] => 1 
+   [TNO_TNP_Bv6_61212015301] => 1 
+   [7] => 0 
+   [TNO_TNP_Bv6_61214015171] => 0 
+   [8] => 0 
+   [TNO_TNP_Bv6_70103015344] => 0 
+   [9] => 0.02119 
+   [Distance] => 0.02119 
+   [10] => TAGGTGTAGGGTACCGTTTTGGGTTTCTGTGCCGTAGCTAACGCATTAAGCCGCCCCGCCGTGGGGAGTACGGCCGCAAGGCTAAAACTCAAAGGAATTGACGGGGGCCCGCACAAGCGGCGGAGCATGTGGATTAATTCGATGCAACGCGAAGAACCTTACCTGGGCTTGACATACACTGGATCGCTGCAGAGATGTAGTTTCCCTTGTGGCTAGTGTACAGGTGGTGCATGGCTGTCGTCAGCTCGTGTCGTGA 
+   [Sequence] => TAGGTGTAGGGTACCGTTTTGGGTTTCTGTGCCGTAGCTAACGCATTAAGCCGCCCCGCCGTGGGGAGTACGGCCGCAAGGCTAAAACTCAAAGGAATTGACGGGGGCCCGCACAAGCGGCGGAGCATGTGGATTAATTCGATGCAACGCGAAGAACCTTACCTGGGCTTGACATACACTGGATCGCTGCAGAGATGTAGTTTCCCTTGTGGCTAGTGTACAGGTGGTGCATGGCTGTCGTCAGCTCGTGTCGTGA 
+   [11] => species 
+   [Rank] => species 
+   [12] => Bacteria;Actinobacteria;Actinobacteria;Actinomycetales;Corynebacteriaceae;Corynebacterium;propinquum 
+   [Taxonomy] => Bacteria;Actinobacteria;Actinobacteria;Actinomycetales;Corynebacteriaceae;Corynebacterium;propinquum 
+   [13] => Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Corynebacteriaceae	Corynebacterium	propinquum 
+   [Domain	Phylum	Class	Order	Family	Genus Species	Strain] => Bacteria	Actinobacteria	Actinobacteria	Actinomycetales	Corynebacteriaceae	Corynebacterium	propinquum )
+   
+   */
+   
    function sum_seq_count()
    {
+     
+     
      
    }
 
